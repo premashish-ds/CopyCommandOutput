@@ -12,7 +12,7 @@ pipeline {
       parallel {
         stage("Task A: Linux command and stote the result in a file") {
           steps {
-            sh "ls -l > ${src_path}"
+            sh "top | head -n 10 > ${src_path}"
             echo "Result is stored in the command.output file"
           }
         }
