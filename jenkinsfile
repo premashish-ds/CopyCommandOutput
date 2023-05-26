@@ -1,0 +1,35 @@
+def src_path = '/tmp/command.output'
+def jenkins_machine = 'jenkins@192.168.0.104'
+def jenkins_dir = '/tmp/premashish/'
+
+pipeline {
+  agent {
+    label 'masternodes'
+  }
+
+  stages {
+    stage("Task A & Task C Running Parallel'") {
+      parallel {
+        stage("Task A: Linux command and stote the result in a file") {
+          steps {
+            sh "ls -l > ${src_path}"
+            echo "Result is stored in the command.output file"
+          }
+        }
+        stage('Task C: Print Job Name & Node Name') {
+          steps {
+            sh 'echo "The ${JOB_NAME} run on ${NODE_NAME}"'
+            echo "the global email is ${var_email}"
+          }
+        }
+      }
+    }
+    stage("Task B: Copy the file from Node to Jenkins") {
+      steps {
+        sh "ssh ${jenkins_machine} mkdir -p ${jenkins_dir}"
+        echo "premashish folder has been created in jenkins"
+        sh "scp ${src_path} ${jenkins_machine}:${jenkins_dir}"
+      }
+    }
+  }
+}
