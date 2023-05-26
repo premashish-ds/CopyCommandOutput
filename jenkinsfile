@@ -29,7 +29,7 @@ pipeline {
         sh "ssh ${jenkins_machine} mkdir -p ${jenkins_dir}"
         echo "premashish folder has been created in jenkins"
         sh "scp ${src_path} ${jenkins_machine}:${jenkins_dir}"
-        sh "cat /tmp/command.output"
+        sh "echo ${src_path}"
       }
     }
   }
